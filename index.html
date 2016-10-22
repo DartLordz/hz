@@ -24,29 +24,26 @@
             var canvas = document.getElementById("myCanvas");  //возвращаем значение канваса в переменную
             var ctx = canvas.getContext("2d"); // определяем в виде переменной, что в канвасе двухмерная рендеринг
             var x = canvas.width / 2; // исходная позиция шарика по х
-            var y = canvas.height - 30; // исходная позиция шарика по y
+            var y = canvas.height - 150; // исходная позиция шарика по y
             var ballRadius = 10; //радиус шарика
-            var dx = 5; //скорость изменения позиции шарика по х
-            var dy = -3; //скорость изменения позиции шарика по у
+            var currentAngle = 0;
+            var radius = 100;
             
             function draw () { //создаем функцию прорисовки шарика
-                if (x + dx + ballRadius > canvas.width || x + dx < ballRadius) { //условие соприкасание с левой и правой стенами для шарика
-                    dx = -dx; //изменение направления движения шарика по оси х
-                }
-                if (y + dy + ballRadius > canvas.height || y + dy < ballRadius) { //условие соприкасание с нижней и верхней стенами для шарика
-                    dy = -dy; //изменение направления движения шарика по оси у
-                }
                 ctx.clearRect(0, 0, canvas.width, canvas.height); //очищаем канвас от предыдущей прорисовки шарика
+                var dx = Math.cos(currentAngle) * radius;
+                var dy = Math.sin(currentAngle) * radius;
                 ctx.beginPath(); //создаем контур для шарика
-                ctx.arc(x, y, ballRadius, 0, Math.PI*2,false); //придаем форму круга контуру
+                ctx.rect(x + dx, y + dy, 50, 50);
                 ctx.fillStyle = "green"; //устанавливаем цвет заливки шарика
                 ctx.fill(); //рисуем шарик с заливкой внутренней области
+                ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
+                ctx.stroke();
                 ctx.closePath(); //закрываем контур
-                x += dx; //изменение позиции по х на выбраную величину
-                y += dy; //изменение позиции по y на выбраную величину
+                currentAngle += 0.1;
             }
                 
-            setInterval(draw, 10); //выставляем интервал вызова функции на каждые 10 милисекунд
+            setInterval(draw, 30); //выставляем интервал вызова функции на каждые 10 милисекунд
                 
             
         </script>
